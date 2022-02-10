@@ -1,4 +1,3 @@
-const Sequelize = require("sequelize");
 const Db = require("../models");
 const Task = Db.tasks;
 
@@ -56,13 +55,6 @@ class TaskHelper {
         deleted_at: null,
         created_by: this.user.id,
       },
-    });
-  };
-
-  delete = async (task) => {
-    return await task.update({
-      updated_by: this.user.id,
-      deleted_at: Sequelize.fn("NOW"),
     });
   };
 

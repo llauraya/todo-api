@@ -64,7 +64,10 @@ exports.delete = async (req, res) => {
     }
 
     // Proceed with deletion
-    await taskObj.delete(task);
+    await taskObj.update(task, {
+      updated_by: user.id,
+      deleted_at: Sequelize.fn("NOW"),
+    });
 
     return res.status(200).send({
       message: "Success",
