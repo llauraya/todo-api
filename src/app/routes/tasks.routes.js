@@ -6,13 +6,7 @@ module.exports = (app) => {
   let router = require("express").Router();
 
   // list
-  router.get(
-    "/tasks",
-    guard,
-    taskValidator,
-    runValidation,
-    taskController.list
-  );
+  router.get("/tasks", guard, taskController.list);
 
   // create
   router.post(
