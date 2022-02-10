@@ -188,3 +188,19 @@ Set the values of the following variables on the app src/.env file
     "message": "Success"
   }
 ```
+
+#### Reorder tasks (swap order)
+
+```http
+  POST: /api/tasks/reorder
+  HEADER: Authorization {{token}}
+  BODY: {
+    "taskId1": 4,
+    "taskId2": 5
+  }
+  RESPONSE:
+  statusCode: 200
+  body: {
+    "message": "Success"
+  }
+```
