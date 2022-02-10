@@ -1,6 +1,8 @@
 const TaskHelper = require("../helpers/task");
 const Strings = require("../constants/strings");
 
+const Sequelize = require("sequelize");
+
 exports.list = async (req, res) => {
   try {
     const user = res.locals.user;
@@ -66,6 +68,42 @@ exports.delete = async (req, res) => {
 
     return res.status(200).send({
       message: "Success",
+    });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send({
+      message: Strings.SERVER_ERROR,
+    });
+  }
+};
+
+exports.update = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const user = res.locals.user;
+
+    // Call taskhelper for operations
+    const taskObj = new TaskHelper(user);
+
+    // Check first if resource exists
+    const task = await taskObj.findOneById(id);
+    if (null === task) {
+      return res.status(404).send({
+        message: Strings.NOT_FOUND,
+      });
+    }
+
+    // Proceed with updating the object
+    await taskObj.update(task, {
+      name: req.body.name,
+      description: req.body.description,
+      updated_by: user.id,
+      updated_at: Sequelize.fn("NOW"),
+    });
+
+    return res.status(200).send({
+      message: "Success",
+      data: task,
     });
   } catch (e) {
     console.log(e);

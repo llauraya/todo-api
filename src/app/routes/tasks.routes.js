@@ -24,12 +24,15 @@ module.exports = (app) => {
   );
 
   // delete
-  router.delete(
+  router.delete("/tasks/:id([0-9]+)", guard, taskController.delete);
+
+  // update
+  router.put(
     "/tasks/:id([0-9]+)",
     guard,
     taskValidator,
     runValidation,
-    taskController.delete
+    taskController.update
   );
 
   app.use("/api", router);

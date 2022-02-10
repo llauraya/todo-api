@@ -50,6 +50,7 @@ class TaskHelper {
 
   findOneById = async (id) => {
     return await Task.findOne({
+      attributes: ["id", "name", "description", "order"],
       where: {
         id,
         deleted_at: null,
@@ -63,6 +64,10 @@ class TaskHelper {
       updated_by: this.user.id,
       deleted_at: Sequelize.fn("NOW"),
     });
+  };
+
+  update = async (task, data) => {
+    return await task.update(data);
   };
 }
 
