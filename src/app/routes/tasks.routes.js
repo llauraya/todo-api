@@ -5,6 +5,15 @@ module.exports = (app) => {
   const taskController = require("../controllers/task");
   let router = require("express").Router();
 
+  // list
+  router.get(
+    "/tasks",
+    guard,
+    taskValidator,
+    runValidation,
+    taskController.list
+  );
+
   // create
   router.post(
     "/tasks",
