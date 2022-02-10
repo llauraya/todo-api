@@ -44,3 +44,33 @@ exports.create = async (req, res) => {
     });
   }
 };
+
+exports.delete = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const user = res.locals.user;
+
+    // Call taskhelper for operations
+    const taskObj = new TaskHelper(user);
+
+    // Check first if resource exists
+    const task = await taskObj.findOneById(id);
+    if (null === task) {
+      return res.status(404).send({
+        message: Strings.NOT_FOUND,
+      });
+    }
+
+    // Proceed with deletion
+    await taskObj.delete(task);
+
+    return res.status(200).send({
+      message: "Success",
+    });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send({
+      message: Strings.SERVER_ERROR,
+    });
+  }
+};

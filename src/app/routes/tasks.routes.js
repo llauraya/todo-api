@@ -23,5 +23,14 @@ module.exports = (app) => {
     taskController.create
   );
 
+  // delete
+  router.delete(
+    "/tasks/:id([0-9]+)",
+    guard,
+    taskValidator,
+    runValidation,
+    taskController.delete
+  );
+
   app.use("/api", router);
 };
