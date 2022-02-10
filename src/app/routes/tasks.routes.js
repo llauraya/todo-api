@@ -1,6 +1,6 @@
 module.exports = (app) => {
   const { guard } = require("../guard");
-  const { taskValidator } = require("../validators/task");
+  const { taskValidator, reorderValidator } = require("../validators/task");
   const { runValidation } = require("../validators");
   const taskController = require("../controllers/task");
   let router = require("express").Router();
@@ -33,6 +33,15 @@ module.exports = (app) => {
     taskValidator,
     runValidation,
     taskController.update
+  );
+
+  // reorder
+  router.post(
+    "/tasks/reorder",
+    guard,
+    reorderValidator,
+    runValidation,
+    taskController.reorder
   );
 
   app.use("/api", router);
