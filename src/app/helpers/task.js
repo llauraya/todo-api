@@ -39,7 +39,14 @@ class TaskHelper {
     });
   };
 
-  count = async (query) => {};
+  count = async () => {
+    return await Task.count({
+      where: {
+        deleted_at: null,
+        created_by: this.user.id,
+      },
+    });
+  };
 
   findOneById = async (id) => {
     return await Task.findOne({

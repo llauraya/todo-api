@@ -12,7 +12,7 @@ exports.list = async (req, res) => {
     const data = await taskObj.findAll(req.query);
 
     // count total data with filter (for pagination)
-    const total = await taskObj.count(req.query);
+    const total = await taskObj.count();
 
     return res.status(200).send({
       data,
