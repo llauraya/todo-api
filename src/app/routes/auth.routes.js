@@ -1,5 +1,5 @@
 module.exports = (app) => {
-  const auth = require("../controllers/auth.js");
+  const authController = require("../controllers/auth.js");
   // import validators
   const {
     registrationValidator,
@@ -14,11 +14,11 @@ module.exports = (app) => {
     "/registration",
     registrationValidator,
     runValidation,
-    auth.register
+    authController.register
   );
 
   // login
-  router.post("/login", loginValidator, runValidation, auth.login);
+  router.post("/login", loginValidator, runValidation, authController.login);
 
   app.use("/api", router);
 };
